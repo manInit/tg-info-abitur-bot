@@ -1,0 +1,22 @@
+{
+  "name": "tg-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env-file -p ./env.json nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "cheerio": "^1.0.0-rc.10",
+    "docx-parser": "^0.2.1",
+    "docx4js": "^3.2.20",
+    "node-telegram-bot-api": "^0.56.0",
+    "officeparser": "^2.3.0"
+  },
+  "devDependencies": {
+    "cross-env-file": "^1.0.0"
+  }
+}
