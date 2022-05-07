@@ -11,7 +11,6 @@ class Parser {
   async getStudyPlan(url) {
     const body = await axios.get(url)
     const $ = cheerio.load(body.data)
-
   }
 
   async getStudyPlanConcreteDirection(url) {

@@ -10,8 +10,17 @@ module.exports = class Bot {
   }
 
   constructor(token) {
+    const eventEmitter = new TelegramBot.EventEmitter()
+    eventEmitter.on('cost_event', (e) => {
+      console.log(123)
+    })
+
     this.token = token
     this.bot = new TelegramBot(this.token, { polling: true })
+    this.bot.on('callback_query', (callbackQuery) => {
+      eventEmitter.emit(callbackQuery.data)
+      this.bot.answerCallbackQuery(callbackQuery.id, "Hi", false)
+   });
     this.mainMenu()
     this.showMenuCost()
     this.costConcreteHandler()
@@ -29,7 +38,8 @@ module.exports = class Bot {
 
       this.bot.sendMessage(msg.chat.id, 'Привет', {
         'reply_markup': {
-          'keyboard': [['Стоимость обучения'],
+          'keyboard': [
+          ['Стоимость обучения'],
            ['План обучения'], 
            ['Порядок подача документов'], 
            ['Информация о общежетии'], 
@@ -51,7 +61,10 @@ module.exports = class Bot {
 
       await this.bot.sendMessage(msg.chat.id, 'Выбери направление', {
         'reply_markup': {
-          'keyboard': [['/start'], ...res]
+          'inline_keyboard': [
+            [{text: '/start', callback_data: 'cost_event'}],
+          
+        ]
         }
       })
       this.state.isCost = true
