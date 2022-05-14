@@ -14,10 +14,10 @@ class Parser {
   }
 
   async getStudyPlanConcreteDirection(url) {
-    const body = await axios.get(this.root + url)
+    const body = await axios.get(url)
     const $ = cheerio.load(body.data)
 
-    const study = []
+    const study = {}
     $('.content ul')[0].children.forEach(item => {
       if (!item.tagName) return
 
@@ -25,7 +25,7 @@ class Parser {
       const field = link.text()
       const linkOnPlan = this.root + link.attr().href
 
-      study.push({ [field]: linkOnPlan })
+      study[field] = linkOnPlan
     })
     return JSON.stringify(study)
   }
@@ -34,7 +34,7 @@ class Parser {
     const body = await axios.get(this.planUrl)
     const $ = cheerio.load(body.data)
 
-    const getStudyPlan = []
+    const getStudyPlan = {}
     $('.content ul')[0].children.forEach(item => {
       if (!item.tagName) return
 
@@ -42,7 +42,7 @@ class Parser {
       const field = link.text()
       const linkOnPlan = this.root + link.attr().href
 
-      getStudyPlan.push({ [field]: linkOnPlan })
+      getStudyPlan[field] = linkOnPlan
     })
 
     return JSON.stringify(getStudyPlan)
@@ -52,7 +52,7 @@ class Parser {
     const body = await axios.get(this.costUrl)
     const $ = cheerio.load(body.data)
 
-    const fieldsEducation = []
+    const fieldsEducation = {}
 
     $('.content ul')[0].children.forEach(item => {
       if (!item.tagName) return
@@ -60,7 +60,7 @@ class Parser {
       const field = link.text()
       const linkOnCost = this.root + link.attr().href
 
-      fieldsEducation.push({ [field]: linkOnCost })
+      fieldsEducation[[field]] =  linkOnCost
     })
 
     return JSON.stringify(fieldsEducation)
@@ -83,9 +83,10 @@ class Parser {
       if (indexCost.includes(index)) return item
     })
 
-    const costs = []
+    const costs = {}
     for (let i = 0; i < lines.length - 1; i += 2) {
-      costs.push({ [lines[i].trim()]: lines[i + 1].trim() + 'p. За год обучения без скидок' })
+
+      costs[lines[i].trim()] = lines[i + 1].trim() + 'p. За год обучения без скидок'
     }
 
     return JSON.stringify(costs)
