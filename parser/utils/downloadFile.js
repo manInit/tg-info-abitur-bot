@@ -4,7 +4,11 @@ const path = require('path')
 
 const downloadFile = async (fileUrl, downloadFolder, ext = '.docx') => {
   const fileName = path.basename(fileUrl)
-  const localFilePath = path.resolve(__dirname, downloadFolder, fileName + ext)
+  const downloadPath = path.resolve(__dirname, downloadFolder)
+  if (!fs.existsSync(downloadPath)) {
+    fs.mkdirSync(downloadPath)
+  }
+  const localFilePath = path.resolve(downloadPath, fileName + ext)
   //файл уже существует
   if (fs.existsSync(localFilePath)) return localFilePath
 
