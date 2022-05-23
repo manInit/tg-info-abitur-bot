@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env-file -p ./env.json nodemon index.js"
+    "dev": "cross-env-file -p ./env.json nodemon index.js",
+    "start": "cross-env-file -p ./env.json node index.js"
   },
   "author": "",
   "license": "ISC",

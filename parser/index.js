@@ -1,7 +1,7 @@
 const cheerio = require('cheerio')
 const axios = require('axios').default
 const downloadFile = require('./utils/downloadFile')
-const docxParser = require('docx-parser');
+const docxParser = require('docx-parser')
 
 class Parser {
   root = 'https://www.istu.edu'
@@ -69,8 +69,12 @@ class Parser {
   async getCosts(url) {
     const path = await downloadFile(url, '../temp')
     const text = await new Promise((resolve, reject) => {
-      docxParser.parseDocx(path, data => resolve(data))
-    })
+      try {
+        docxParser.parseDocx(path, data => resolve(data))
+      } catch (e) {
+        reject(e)
+      }
+    }).catch(e => console.log(e))
     let lines = text.split('\n')
     //получаем индексы строки цен
     let indexCost = lines.map((text, index) => {
