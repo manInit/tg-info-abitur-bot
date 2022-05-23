@@ -67,7 +67,9 @@ class Parser {
   }
 
   async getCosts(url) {
+    console.log('download')
     const path = await downloadFile(url, '../temp')
+    console.log('downloaded')
     const text = await new Promise((resolve, reject) => {
       try {
         docxParser.parseDocx(path, data => resolve(data))
@@ -75,6 +77,7 @@ class Parser {
         reject(e)
       }
     }).catch(e => console.log(e))
+    console.log('get')
     let lines = text.split('\n')
     //получаем индексы строки цен
     let indexCost = lines.map((text, index) => {
