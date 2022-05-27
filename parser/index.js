@@ -7,11 +7,24 @@ class Parser {
   root = 'https://www.istu.edu'
   costUrl = this.root + '/abiturientu/nabor_2022/stoimost'
   planUrl = this.root + '/abiturientu/urovni/up'
+  challengeUrl = this.root + '/abiturientu/exameny/prioritet'
 
   async getStudyPlan(url) {
     const body = await axios.get(url)
     const $ = cheerio.load(body.data)
   }
+
+  // async getStartChallengeDirection() {
+  //   const body = await axios.get(this.challengeUrl)
+  //   const $ = cheerio.load(body.data)
+  //   const table = $('.content tbody')[0]
+  //   const rows = $(table).children('tr')
+  //   for (let i = 0; i < rows.length; i++) {
+  //     const cells = $(rows[0]).children()
+  //     console.log(cells)
+  //   }
+  //   return {test: '1'}
+  // }
 
   async getStudyPlanConcreteDirection(url) {
     const body = await axios.get(url)

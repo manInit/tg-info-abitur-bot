@@ -17,11 +17,12 @@ module.exports = class Bot {
     this.mainMenu()
     this.showMenuPlan()
     this.showMenuCost()
+    // this.showStarterChallengeDirection()
   }
 
   mainMenu() {
     this.bot.onText(/\/start/, msg => {
-      this.bot.sendMessage(msg.chat.id, '', {
+      this.bot.sendMessage(msg.chat.id, 'Меню', {
         'reply_markup': {
           'keyboard': [
             ['Стоимость обучения'],
@@ -42,6 +43,14 @@ module.exports = class Bot {
       await this._sendData(msg, field, 'plan_event', 'Выбери направление')
     })
   }
+
+  // showStarterChallengeDirection() {
+  //   this.bot.onText(/Вступительные испытания/, async msg => {
+  //     const field = await parser.getStartChallengeDirection()
+  //     // this.state.planDirection = Object.values(field)
+  //     // await this._sendData(msg, field, 'plan_event', 'Выбери направление')
+  //   })
+  // }
 
   showMenuCost() {
     this.bot.onText(/Стоимость обучения/, async msg => {
