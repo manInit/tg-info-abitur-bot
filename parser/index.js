@@ -29,7 +29,6 @@ class Parser {
   async getStudyPlanConcreteDirection(url) {
     const body = await axios.get(url)
     const $ = cheerio.load(body.data)
-
     const study = {}
     $('.content ul')[0].children.forEach(item => {
       if (!item.tagName) return
@@ -46,7 +45,6 @@ class Parser {
   async getStudyPlanDirection() {
     const body = await axios.get(this.planUrl)
     const $ = cheerio.load(body.data)
-
     const getStudyPlan = {}
     $('.content ul')[0].children.forEach(item => {
       if (!item.tagName) return
@@ -54,6 +52,7 @@ class Parser {
       const link = $(item).children('a')
       const field = link.text()
       const linkOnPlan = this.root + link.attr().href
+      
 
       getStudyPlan[field] = linkOnPlan
     })
